@@ -1,0 +1,78 @@
+{% load bootstrap4 %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+    <title>CRUD App</title>
+
+    <style>
+      body {
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Home</h1>
+
+      <div>
+      {% if messages %}
+
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message | safe }}
+      </div>
+      {% endfor %}
+
+      {% endif %}
+      </div>
+      <div>
+      <a href="{% url 'crud:create' %}" class="btn btn-success">Tambah</a>
+      </div>
+      <br>
+
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <th width="5%">ID</th>
+                  <th width="20%">Judul</th>
+                  <th width="45%">Deskripsi</th>
+                  <th width="20%">Aksi</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% if tasks %}
+              {% for task in tasks %}
+              <tr>
+                <td>{{ task.id }}</td>
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>
+                  <a href="{% url 'crud:detail' task.id %}" class="btn btn-warning btn-sm">detail</a>
+                  <a href="{% url 'crud:update' task.id %}" class="btn btn-primary btn-sm">edit</a>
+                  <a href="{% url 'crud:delete' task.id %}" class="btn btn-danger btn-sm" class="btn btn-success btn-sm">delete</a>
+                </td>
+              </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5">data tidak ditemukan</td>
+              </tr>
+            {% endif %}
+          </tbody>
+      </table>
+  </div>
+
+  {% bootstrap_javascript %}
+ 
+  </body>
+</html>
